@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head> 
+        <meta charset="UTF-8">
+        <title>Pesquisa Satisfação</title>
+        <style>
+            h3{
+                text-align: center;
+                font-family: fantasy;
+                color: blue;
+            }
+            div{
+                text-align: center;
+            }
+            .botoes{
+                background-color: rgb(159, 186, 245);
+                border-color: ivory;
+                margin-left: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <h3>Você está satisfeito com sua compra?</h3>
+        <form action="#" >
+            <div class="form-group">
+                <button class="botoes" id="botao_sim" name="botao_sim">SIM</button>
+                <label for="botao_sim" id="label_botao_sim">teste</label>
+                <button class="botoes" id="botao_nao" name="botao_nao">NÃO</button>
+                <label for="botao_nao" id="label_botao_nao">teste</label>
+            </div>
+        </form>
+        <script src="https://code.jquery.com/jquery-3.0.0.min.js" type="text/javascript"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js" type="text/javascript"></script>
+        <script>
+            const URL_API = 'http://localhost:3030/contador'
+
+            $("#botao_sim").click(function(){
+                 fetch(URL_API.concat("/sim"), {
+                     method:'POST'
+                 })
+                .then(resp => resp.json())
+                .then(ret => {
+                    $("#label_botao_sim").text(ret.sim);
+                })
+            })
+
+            $("#botao_nao").click(function(){
+                fetch(URL_API.concat("/nao"), {
+                     method:'POST'
+                 })
+                .then(resp => resp.json())
+                .then(ret => {
+                    $("#label_botao_nao").text(ret.nao);
+                })
+            })
+
+            $(document).ready(function(){
+                fetch(URL_API)
+                .then(resp => resp.json())
+                .then(ret => {
+                    $("#label_botao_sim").text(ret.sim);
+                    $("#label_botao_nao").text(ret.nao);
+                })
+            })
+        </script>
+    </body>
+</html>
